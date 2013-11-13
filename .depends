@@ -1,0 +1,2 @@
+main.o: main.cpp renderschuessel.hpp math.hpp matrix.hpp vector.hpp \
+  ray.hpp
