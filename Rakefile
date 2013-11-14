@@ -1,10 +1,11 @@
 require 'rake/loaders/makefile'
+require 'mkmf'
 require 'pp'
 
 SOURCE_FILES = Dir['src/*.cpp']
 TEST_FILES = Dir['test/*.cpp']
 
-CXX = "g++"
+CXX = 'clang++'
 LD_FLAGS = []
 LD_TEST_FLAGS=LD_FLAGS + ['-pthread']
 CXX_FLAGS=['-g -std=c++11']
