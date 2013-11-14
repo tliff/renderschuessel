@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'rb-fsevent'
+
+paths = [Dir.pwd+'/src',Dir.pwd+'/test']
+
+fsevent = FSEvent.new
+fsevent.watch paths do |directories|
+  system("clear")
+  system("rake runtest")
+end
+fsevent.run

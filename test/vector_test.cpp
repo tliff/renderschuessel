@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "vector.hpp"
+#include "math.hpp"
 
 TEST(VectorTest, Length) {
     Vector3 v = {3,1.5,-2};

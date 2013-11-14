@@ -15,56 +15,90 @@ public:
         return sqrt(x[0]*x[0]+x[1]*x[1]+x[2]*x[2]);
     }
     
-    const Vector3Base<T> norm(){
+    Vector3Base<T> norm()const{
         Vector3Base<T> v = *this;
         v.normalize();
         return v;
     }
     
-    void normalize(){
+    Vector3Base<T>& normalize(){
         T l = length();
         x[0]/=l;
         x[1]/=l;
         x[2]/=l;
+        return *this;
     }
     
-    void operator+=(const Vector3Base<T>& other){
+    Vector3Base<T>& operator+=(Vector3Base<T>const& other){
         x[0]+=other.x[0];
         x[1]+=other.x[1];
         x[2]+=other.x[2];
+        return *this;
+    }
+    
+    Vector3Base<T>& operator-=(Vector3Base<T>const& other){
+        x[0]-=other.x[0];
+        x[1]-=other.x[1];
+        x[2]-=other.x[2];
+        return *this;
     }
 
-    const Vector3Base<T> operator+(const Vector3Base<T>& other)const{
+
+    Vector3Base<T>& operator*=(const double other){
+        x[0]*=other;
+        x[1]*=other;
+        x[2]*=other;
+        return *this;
+    }
+
+    Vector3Base<T> operator+(Vector3Base<T> const& other)const{
         auto v = *this;
         v+= other;
         return v;
     }
+
+    Vector3Base<T> operator-(Vector3Base<T>const& other)const{
+        auto v = *this;
+        v-= other;
+        return v;
+    }
     
-    const Vector3Base<T> operator*(const Vector3Base<T>& other)const{
+    T operator*(Vector3Base<T>const& other)const{
         return x[0]*other.x[0] + x[1]*other.x[1] + x[2]*other.x[2];
     }
 
-    void operator%=(const Vector3Base<T>& other){
+    Vector3Base<T> operator*(double other)const{
+        auto v = *this;
+        v*= other;
+        return v;
+    }
+
+    Vector3Base<T>& operator%=(Vector3Base<T>const& other){
         T a = x[1]*other.x[2]-x[2]*other.x[1];
         T b = x[2]*other.x[0]-x[0]*other.x[2];
         T c = x[0]*other.x[1]-x[1]*other.x[0];
         x[0] = a;
         x[1] = b;
         x[2] = c;
+        return *this;
     }
 
-    const Vector3Base<T> operator%(const Vector3Base<T>& other)const{
+    Vector3Base<T> operator%(Vector3Base<T>const& other)const{
         auto v = *this;
         v%= other;
         return v;
     }
 
-    const bool operator==(const Vector3Base<T>& other) const {
+    bool operator==(Vector3Base<T>const& other) const {
         return x[0]==other.x[0]&&x[1]==other.x[1]&&x[2]==other.x[2];
     }
 
-    const bool operator!=(const Vector3Base<T>& other) const {
+    bool operator!=(Vector3Base<T>const& other) const {
         return !(*this==other);
+    }
+    
+    bool about(Vector3Base<T>const& other) const{
+        return abs(x[0]-other.x[0] < EPSILON && x[1]-other.x[1] < EPSILON && x[2]-other.x[2] < EPSILON);
     }
 
 };
