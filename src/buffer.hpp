@@ -24,7 +24,7 @@ public:
     }
     
     std::string ppm() const{
-        auto ss = std::stringstream();
+        std::stringstream ss;
         ss << "P3" << std::endl;
         ss << width << " " << height << std::endl;
         ss << 255 << std::endl;
