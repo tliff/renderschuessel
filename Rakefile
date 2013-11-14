@@ -11,7 +11,6 @@ CXX_FLAGS=['-g -std=c++11']
 CXX_TEST_FLAGS=CXX_FLAGS+['-isystem/opt/local/gtest/include', '-I/opt/local/gtest','-Isrc']
 
 
-
 file ".build/src/.depends" => Dir['src/**/*.cpp'] do |t|
   sh "rm -f .build/src/.depends"
   t.prerequisites.each do |name|

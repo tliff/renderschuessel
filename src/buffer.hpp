@@ -30,7 +30,7 @@ public:
         ss << 255 << std::endl;
         for(int x = 0; x < height; x++){
             for(int y = 0; y < width; y++){
-                ss << std::get<0>(pget(x,y)) << " " << std::get<1>(pget(x,y)) << " " << std::get<2>(pget(x,y)) << " ";
+                ss << pget(x,y)[0] << " " << pget(x,y)[1] << " " << pget(x,y)[2] << " ";
             }
             ss << std::endl;
         }

@@ -1,7 +1,6 @@
 renderschuessel
 renderschuessel_test
 bin/**
-.build
 
 # Compiled Object files
 *.slo
