@@ -1,14 +1,36 @@
 #ifndef SPHERE_HPP_3Y096I6
 #define SPHERE_HPP_3Y096I6
+#include "sceneobject.hpp"
 #include "math.hpp"
 
 
-class Sphere{ 
+class Sphere : public SceneObject{ 
 public:
     Vector3 origin;
     double radius;
     
-    bool intersect(Ray const& ray, Intersection& intersection){
+    Sphere(Vector3 o, double r) : radius(r), origin(o) {};
+
+    bool intersect(Ray const& ray) const {
+        Vector3 v = ray.origin - this->origin;
+  
+        double desc = pow ( ray.direction * v,2 ) - ((ray.direction * ray.direction)  * ( v * v - radius * radius ));
+        
+        if ( desc < 0 )  
+                return false;
+        desc = sqrt ( desc );
+        Vector3 tmp = (ray.direction*(-1.0));
+        double dista = ( tmp * v  + desc ) / (ray.direction * ray.direction);
+        double distb = ( tmp * v  - desc ) / (ray.direction * ray.direction);
+
+        if(dista < 0 && distb < 0)
+            return false;
+
+        return true;
+    }
+
+    
+    bool intersect(Ray const& ray, Intersection& intersection) const{
         Vector3 v = ray.origin - this->origin;
   
         double desc = pow ( ray.direction * v,2 ) - ((ray.direction * ray.direction)  * ( v * v - radius * radius ));
@@ -41,6 +63,8 @@ public:
         intersection.point = ray.origin + ray.direction*dista;
         intersection.distance = dista;
         intersection.normal = (intersection.point-origin).norm();
+        intersection.light = isLight();
+        intersection.emittance = emittance;
 
         return true;
     }

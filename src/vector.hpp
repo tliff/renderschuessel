@@ -2,6 +2,7 @@
 #define VECTOR_HPP_Q9NYBVZ7
 
 #include <cmath>
+#include <random>
 
 template<class T> class Vector3Base {
 public:
@@ -99,6 +100,14 @@ public:
     
     bool about(Vector3Base<T>const& other) const{
         return abs(x[0]-other.x[0] < EPSILON && x[1]-other.x[1] < EPSILON && x[2]-other.x[2] < EPSILON);
+    }
+
+    Vector3Base<T> randomVectorInHemisphere() const {
+        auto generator = std::bind(std::uniform_real_distribution<double> (0,1), std::mt19937(std::random_device{}()));
+        Vector3Base<T> newVector = {generator()-0.5,generator()-0.5,generator()-0.5};
+        if(newVector* *this < 0)
+          newVector *= -1;
+        return newVector.norm();
     }
 
 };

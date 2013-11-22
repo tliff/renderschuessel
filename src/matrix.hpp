@@ -2,7 +2,7 @@
 #define MATRIX_HPP_EB7NHHFW
 
 
-class Matrix {
+class Matrix44 {
 public:
     double x[16];
     
@@ -18,6 +18,27 @@ public:
         return s;
     };
     
+    Matrix44& operator*=(Matrix44 const& other){
+        *this = *this * other;
+        return *this;
+    }
+    
+    
+    Matrix44 operator*(Matrix44 const& other) const {
+        Matrix44 r;
+        for(int k = 0; k < 4; k++){
+            for(int i = 0; i < 4; i++){
+                double val = 0;
+                for(int j = 0; j < 4; j++){
+                    val+=x[i*4+j]*other.x[j*4+k];
+                }
+                r.x[i*4+k]=val;
+            }
+        }
+        return r;
+    }
+    
+
 };
 
 #endif /* end of include guard: MATRIX_HPP_EB7NHHFW */
