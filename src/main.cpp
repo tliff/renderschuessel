@@ -45,7 +45,8 @@ Color tracePath(Ray& r, int depth=0){
 void renderBuffer(int threadId){
   Ray r = {{0,0,10},{-1,0,0}};
   long sampleCount = 0;
-  auto generator = std::bind(std::uniform_int_distribution<int> (-(IMAGESIZE/2)),(IMAGESIZE/2-1)), std::mt19937(std::random_device{}()));
+  auto generator = std::bind(
+    std::uniform_int_distribution<int>(-(IMAGESIZE/2),(IMAGESIZE/2-1)), std::mt19937(std::random_device{}()));
     
   while(sampleCount < IMAGESIZE*IMAGESIZE*128){
     int x = generator();
@@ -53,7 +54,7 @@ void renderBuffer(int threadId){
     float _x = (10/(double)IMAGESIZE)*x;
     float _y = (10/(double)IMAGESIZE)*y;
     r.direction = (Vector3({_x, _y, 0})-r.origin).norm();
-    buffers[threadId].padd(x+(IMAGESITE/2),y+(IMAGESITE/2), tracePath(r));
+    buffers[threadId].padd(x+(IMAGESIZE/2),y+(IMAGESIZE/2), tracePath(r));
       
     sampleCount++;
   }
