@@ -5,10 +5,10 @@ require 'pp'
 SOURCE_FILES = Dir['src/*.cpp']
 TEST_FILES = Dir['test/*.cpp']
 
-CXX = 'clang++'
+CXX = 'g++'
 LD_FLAGS = ['-L/opt/local/lib', '-lHalf','-lIlmImf']
 LD_TEST_FLAGS=LD_FLAGS + ['-pthread']
-CXX_FLAGS=['-O4', '-Ofast', '-std=c++11', '-I/opt/local/include', '-I/opt/local/include/OpenEXR']
+CXX_FLAGS=['-O4', '-Ofast', '-std=c++11', '-I/opt/local/include', '-I/opt/local/include/OpenEXR', '-I/usr/include/OpenEXR']
 CXX_TEST_FLAGS=CXX_FLAGS+['-isystem/opt/local/gtest/include', '-I/opt/local/gtest','-Isrc']
 
 
