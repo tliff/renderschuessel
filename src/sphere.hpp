@@ -60,12 +60,13 @@ public:
                 return false;
         }
         
-        intersection.point = ray.origin + ray.direction*dista;
-        intersection.distance = dista;
-        intersection.normal = (intersection.point-origin).norm();
-        intersection.light = isLight();
-        intersection.emittance = emittance;
-
+        if(intersection.distance > dista){
+            intersection.point = ray.origin + ray.direction*dista;
+            intersection.distance = dista;
+            intersection.normal = (intersection.point-origin).norm();
+            intersection.light = isLight();
+            intersection.emittance = emittance;
+        }
         return true;
     }
 };

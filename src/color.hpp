@@ -19,24 +19,24 @@ public:
       c[2]=0;
     };
     
-    double operator[](int i) const {
+    inline double operator[](int i) const {
         return c[i];
     }
     
-    Color& operator+=(Color const& other){
+    inline Color& operator+=(Color const& other){
       c[0] += other.c[0];
       c[1] += other.c[1];
       c[2] += other.c[2];
       return *this;
     }
     
-    Color operator+(Color const&  other) const {
+    inline Color operator+(Color const&  other) const {
       Color c = *this;
       c+= other;
       return c;
     }
     
-    Color operator*(float scale) const {
+    inline Color operator*(float scale) const {
       return {c[0]*scale,c[1]*scale,c[2]*scale};
     }
 };

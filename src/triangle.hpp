@@ -63,13 +63,17 @@ public:
         if(t > intersection.distance)
       	  return false;
  
-        intersection.point = ray.origin + ray.direction*t;
-        intersection.distance = t;
-        intersection.light = isLight();
-        if(normal * ray.direction > 0)
-          	intersection.normal = normal * -1;
-        else
-            intersection.normal = normal;
+ 
+        if(intersection.distance > t){
+            intersection.point = ray.origin + ray.direction*t;
+            intersection.distance = t;
+            if(normal * ray.direction > 0)
+              	intersection.normal = normal * -1;
+            else
+                intersection.normal = normal;
+            intersection.light = isLight();
+            intersection.emittance = emittance;
+        }
 
       return true;
     }

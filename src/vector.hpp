@@ -4,25 +4,28 @@
 #include <cmath>
 #include <random>
 
+extern std::function<double(void)> generator;
+
 template<class T> class Vector3Base {
 public:
     T x[3];
     
+
     operator std::string(){
         return "Vector{"+std::to_string(x[0])+","+std::to_string(x[1])+","+std::to_string(x[2])+"}";
     }
     
-    const T length(){
+    inline const T length() const{
         return sqrt(x[0]*x[0]+x[1]*x[1]+x[2]*x[2]);
     }
     
-    Vector3Base<T> norm()const{
+    inline Vector3Base<T> norm()const{
         Vector3Base<T> v = *this;
         v.normalize();
         return v;
     }
     
-    Vector3Base<T>& normalize(){
+    inline Vector3Base<T>& normalize(){
         T l = length();
         x[0]/=l;
         x[1]/=l;
@@ -30,14 +33,14 @@ public:
         return *this;
     }
     
-    Vector3Base<T>& operator+=(Vector3Base<T>const& other){
+    inline Vector3Base<T>& operator+=(Vector3Base<T>const& other){
         x[0]+=other.x[0];
         x[1]+=other.x[1];
         x[2]+=other.x[2];
         return *this;
     }
     
-    Vector3Base<T>& operator-=(Vector3Base<T>const& other){
+    inline Vector3Base<T>& operator-=(Vector3Base<T>const& other){
         x[0]-=other.x[0];
         x[1]-=other.x[1];
         x[2]-=other.x[2];
@@ -45,36 +48,36 @@ public:
     }
 
 
-    Vector3Base<T>& operator*=(const double other){
+    inline Vector3Base<T>& operator*=(const double other){
         x[0]*=other;
         x[1]*=other;
         x[2]*=other;
         return *this;
     }
 
-    Vector3Base<T> operator+(Vector3Base<T> const& other)const{
+    inline Vector3Base<T> operator+(Vector3Base<T> const& other)const{
         auto v = *this;
         v+= other;
         return v;
     }
 
-    Vector3Base<T> operator-(Vector3Base<T>const& other)const{
+    inline Vector3Base<T> operator-(Vector3Base<T>const& other)const{
         auto v = *this;
         v-= other;
         return v;
     }
     
-    T operator*(Vector3Base<T>const& other)const{
+    inline T operator*(Vector3Base<T>const& other)const{
         return x[0]*other.x[0] + x[1]*other.x[1] + x[2]*other.x[2];
     }
 
-    Vector3Base<T> operator*(double other)const{
+    inline Vector3Base<T> operator*(double other)const{
         auto v = *this;
         v*= other;
         return v;
     }
 
-    Vector3Base<T>& operator%=(Vector3Base<T>const& other){
+    inline Vector3Base<T>& operator%=(Vector3Base<T>const& other){
         T a = x[1]*other.x[2]-x[2]*other.x[1];
         T b = x[2]*other.x[0]-x[0]*other.x[2];
         T c = x[0]*other.x[1]-x[1]*other.x[0];
@@ -84,26 +87,25 @@ public:
         return *this;
     }
 
-    Vector3Base<T> operator%(Vector3Base<T>const& other)const{
+    inline Vector3Base<T> operator%(Vector3Base<T>const& other)const{
         auto v = *this;
         v%= other;
         return v;
     }
 
-    bool operator==(Vector3Base<T>const& other) const {
+    inline bool operator==(Vector3Base<T>const& other) const {
         return x[0]==other.x[0]&&x[1]==other.x[1]&&x[2]==other.x[2];
     }
 
-    bool operator!=(Vector3Base<T>const& other) const {
+    inline bool operator!=(Vector3Base<T>const& other) const {
         return !(*this==other);
     }
     
-    bool about(Vector3Base<T>const& other) const{
+    inline bool about(Vector3Base<T>const& other) const{
         return abs(x[0]-other.x[0] < EPSILON && x[1]-other.x[1] < EPSILON && x[2]-other.x[2] < EPSILON);
     }
 
-    Vector3Base<T> randomVectorInHemisphere() const {
-        auto generator = std::bind(std::uniform_real_distribution<double> (0,1), std::mt19937(std::random_device{}()));
+    inline Vector3Base<T> randomVectorInHemisphere() const {
         Vector3Base<T> newVector = {generator()-0.5,generator()-0.5,generator()-0.5};
         if(newVector* *this < 0)
           newVector *= -1;
