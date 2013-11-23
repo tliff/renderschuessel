@@ -3,7 +3,7 @@
 #include "renderschuessel.hpp"
 
 #ifndef MAXDEPTH
-#define MAXDEPTH 16
+#define MAXDEPTH 8
 #endif
 
 #ifndef THREAD_COUNT
@@ -11,11 +11,11 @@
 #endif
 
 #ifndef IMAGESIZE
-#define IMAGESIZE 800
+#define IMAGESIZE 200
 #endif
 
 #ifndef SAMPLES_PER_PIXEL
-#define SAMPLES_PER_PIXEL 4096l
+#define SAMPLES_PER_PIXEL 2048
 #endif
 
 Scene s;
@@ -75,8 +75,26 @@ int main (int argc, char const *argv[])
     sphere->setEmittance(1);
     s.addObject(sphere);
     
+    //left wall
     s.addObject(new Triangle({-6,-10,-10},{-6,10,-10},{-6,10,10}));
     s.addObject(new Triangle({-6,-10,-10},{-6,-10,10},{-6,10,10}));
+    
+    //right wall
+    s.addObject(new Triangle({6,-10,-10},{6,10,-10},{6,10,10}));
+    s.addObject(new Triangle({6,-10,-10},{6,-10,10},{6,10,10}));
+    
+    //top wall
+    s.addObject(new Triangle({-6,10,-10},{6,10,-10},{6,10,10}));
+    s.addObject(new Triangle({6,10,10},{-6,10,10},{-6,10,-10}));
+
+    //bottom wall
+    s.addObject(new Triangle({-6,-10,-10},{6,-10,-10},{6,-10,10}));
+    s.addObject(new Triangle({6,-10,10},{-6,-10,10},{-6,-10,-10}));
+    
+    //back wall
+    s.addObject(new Triangle({-6,10,-10},{6,10,-10},{6,-10,-10}));
+    s.addObject(new Triangle({6,-10,-10},{-6,-10,-10},{-6,10,-10}));
+    
 
     std::vector<std::thread> threads;
 
