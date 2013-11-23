@@ -30,11 +30,25 @@ public:
       return *this;
     }
     
+    inline Color& operator*=(Color const& other){
+      c[0] *= other.c[0];
+      c[1] *= other.c[1];
+      c[2] *= other.c[2];
+      return *this;
+    }
+    
     inline Color operator+(Color const&  other) const {
       Color c = *this;
       c+= other;
       return c;
     }
+    
+    inline Color operator*(Color const&  other) const {
+      Color c = *this;
+      c*= other;
+      return c;
+    }
+    
     
     inline Color operator*(float scale) const {
       return {c[0]*scale,c[1]*scale,c[2]*scale};

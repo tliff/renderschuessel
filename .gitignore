@@ -18,3 +18,4 @@ bin/**
 
 .tm_properties
 .depends
+*.exr

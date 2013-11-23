@@ -6,6 +6,11 @@ protected:
     double emittance = 0;
     Color color;
 public:
+    
+    SceneObject(){
+        color = {1,1,1};
+    }
+    
     virtual bool intersect(Ray const& ray, Intersection& intersection)const =0;
     virtual bool intersect(Ray const& ray)const =0;
     
@@ -16,9 +21,17 @@ public:
     virtual bool getEmittance() const {
         return emittance;
     }
+    
+    virtual const Color& getColor() const {
+        return color;
+    }
 
     virtual void setEmittance(double e){
         emittance = e;
+    }
+
+    virtual void setColor(Color c){
+        color = c;
     }
     
 };

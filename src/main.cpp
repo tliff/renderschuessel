@@ -15,7 +15,7 @@
 #endif
 
 #ifndef SAMPLES_PER_PIXEL
-#define SAMPLES_PER_PIXEL 2048
+#define SAMPLES_PER_PIXEL 1024
 #endif
 
 Scene s;
@@ -40,7 +40,7 @@ Color tracePath(Ray& r, int depth=0){
   
     float cos_theta = newRay.direction * i.normal;
 
-    Color reflected = tracePath(newRay, depth + 1) * cos_theta;
+    Color reflected = tracePath(newRay, depth + 1) * i.color * cos_theta;
     Color emitted = {i.emittance,i.emittance,i.emittance};
 
     return  emitted + reflected;
@@ -75,22 +75,35 @@ int main (int argc, char const *argv[])
     sphere->setEmittance(1);
     s.addObject(sphere);
     
-    //left wall
-    s.addObject(new Triangle({-6,-10,-10},{-6,10,-10},{-6,10,10}));
-    s.addObject(new Triangle({-6,-10,-10},{-6,-10,10},{-6,10,10}));
-    
-    //right wall
-    s.addObject(new Triangle({6,-10,-10},{6,10,-10},{6,10,10}));
-    s.addObject(new Triangle({6,-10,-10},{6,-10,10},{6,10,10}));
+    //bottom wall
+    Triangle* t;
+    t = new Triangle({-6,-10,-10},{-6,10,-10},{-6,10,10});
+    s.addObject(t);
+    t = new Triangle({-6,-10,-10},{-6,-10,10},{-6,10,10});
+    s.addObject(t);
     
     //top wall
-    s.addObject(new Triangle({-6,10,-10},{6,10,-10},{6,10,10}));
-    s.addObject(new Triangle({6,10,10},{-6,10,10},{-6,10,-10}));
+    t = new Triangle({6,-10,-10},{6,10,-10},{6,10,10});
+    s.addObject(t);
+    t = new Triangle({6,-10,-10},{6,-10,10},{6,10,10});
+    s.addObject(t);
+        
+    //right wall
+    t = new Triangle({-6,10,-10},{6,10,-10},{6,10,10});
+    t->setColor({1,0,0}); 
+    s.addObject(t);
+    t = new Triangle({6,10,10},{-6,10,10},{-6,10,-10});
+    t->setColor({1,0,0}); 
+    s.addObject(t);
 
-    //bottom wall
-    s.addObject(new Triangle({-6,-10,-10},{6,-10,-10},{6,-10,10}));
-    s.addObject(new Triangle({6,-10,10},{-6,-10,10},{-6,-10,-10}));
-    
+    //left wall
+    t = new Triangle({-6,-10,-10},{6,-10,-10},{6,-10,10});
+    t->setColor({0,1,0}); 
+    s.addObject(t);
+    t = new Triangle({6,-10,10},{-6,-10,10},{-6,-10,-10});
+    t->setColor({0,1,0}); 
+    s.addObject(t);
+        
     //back wall
     s.addObject(new Triangle({-6,10,-10},{6,10,-10},{6,-10,-10}));
     s.addObject(new Triangle({6,-10,-10},{-6,-10,-10},{-6,10,-10}));

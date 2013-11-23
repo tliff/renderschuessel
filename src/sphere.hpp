@@ -66,6 +66,7 @@ public:
             intersection.normal = (intersection.point-origin).norm();
             intersection.light = isLight();
             intersection.emittance = emittance;
+            intersection.color = color;
         }
         return true;
     }

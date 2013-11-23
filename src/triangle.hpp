@@ -73,6 +73,7 @@ public:
                 intersection.normal = normal;
             intersection.light = isLight();
             intersection.emittance = emittance;
+            intersection.color = color;
         }
 
       return true;

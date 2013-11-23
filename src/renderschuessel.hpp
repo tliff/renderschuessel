@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <iterator>
 
-#include "math.hpp"
 #include "color.hpp"
+#include "math.hpp"
 #include "sphere.hpp" 
 #include "triangle.hpp"
 #include "buffer.hpp"
