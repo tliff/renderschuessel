@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "renderschuessel.hpp"
 #include "math.hpp"
 
 TEST(VectorTest, Length) {

@@ -8,7 +8,7 @@ TEST_FILES = Dir['test/*.cpp']
 CXX = 'g++'
 LD_FLAGS = ['-L/opt/local/lib', '-lHalf','-lIlmImf']
 LD_TEST_FLAGS=LD_FLAGS + ['-pthread']
-CXX_FLAGS=['-O4', '-Ofast', '-std=c++11', '-I/opt/local/include', '-I/opt/local/include/OpenEXR', '-I/usr/include/OpenEXR']
+CXX_FLAGS=['-g', '-std=c++11', '-I/opt/local/include', '-I/opt/local/include/OpenEXR', '-I/usr/include/OpenEXR']
 CXX_TEST_FLAGS=CXX_FLAGS+['-isystem/opt/local/gtest/include', '-I/opt/local/gtest','-Isrc']
 
 
@@ -40,7 +40,7 @@ end
 task :test => ['.build/test/.depends', "bin/renderschuessel_test"]
 
 task :clean do
-  sh "rm -f renderschuessel_test bin/renderschuessel .build/test/* .build/src/* .build/src/.depends .build/test/.depends"
+  sh "rm -f bin/renderschuessel_test bin/renderschuessel .build/test/* .build/src/* .build/src/.depends .build/test/.depends"
 end
 
 rule('.o' => [proc {|t| t.sub('.build/','').gsub(/\.o$/,'.cpp')}]) do |t|

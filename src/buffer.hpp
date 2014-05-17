@@ -12,20 +12,24 @@ class Buffer {
     int height;
     
     std::vector<Color> data;
+    std::vector<int> sampleCount;
 public:
     Buffer(){
         
     }
     
     Buffer(int x, int y) : width(x),height(y) {
+        sampleCount = std::vector<int>(width*height);
         data = std::vector<Color>(width*height);
     };
     
     void pset(int x, int y, Color const& c){
+        sampleCount[y*width+x] += 1;
         data[y*width+x]=c;
     }
 
     void padd(int x, int y, Color const& c){
+        sampleCount[y*width+x] += 1;
         data[y*width+x] +=c;
     }
     
@@ -34,16 +38,9 @@ public:
     }
     
     void writeEXR() const{
-        double max = 0;
-        for(auto& c : data){
-            max = std::max(max, c.c[0]);
-            max = std::max(max, c.c[1]);
-            max = std::max(max, c.c[2]);
-        }
-        
         Imf::Rgba* pixelData = (Imf::Rgba*) malloc(sizeof(Imf::Rgba)*data.size());
         for(int i = 0; i < data.size(); i++){
-            pixelData[i] = {data[i].c[0]/max,data[i].c[1]/max,data[i].c[2]/max,1};
+            pixelData[i] = {data[i].c[0]/(sampleCount[i]),data[i].c[1]/(sampleCount[i]),data[i].c[2]/(sampleCount[i]),1};
         }
         Imf::RgbaOutputFile file ("test.exr", width, height, Imf::WRITE_RGBA);
         file.setFrameBuffer (pixelData, 1, width);
@@ -51,8 +48,10 @@ public:
     }
     
     Buffer& operator+=(Buffer const& other){
-        for(int i = 0; i < data.size(); i++)
+        for(int i = 0; i < data.size(); i++){
+            sampleCount[i]+=other.sampleCount[i];
             data[i]+=other.data[i];
+        }
         return *this;
     }
     

@@ -13,10 +13,10 @@ public:
 
     bool intersect(Ray const& ray) const {
         Vector3 v = ray.origin - this->origin;
-  
+        std::cout << "called" << std::endl;
         double desc = pow ( ray.direction * v,2 ) - ((ray.direction * ray.direction)  * ( v * v - radius * radius ));
         
-        if ( desc < 0 )  
+        if ( desc < 0 )
                 return false;
         desc = sqrt ( desc );
         Vector3 tmp = (ray.direction*(-1.0));
@@ -32,7 +32,6 @@ public:
     
     bool intersect(Ray const& ray, Intersection& intersection) const{
         Vector3 v = ray.origin - this->origin;
-  
         double desc = pow ( ray.direction * v,2 ) - ((ray.direction * ray.direction)  * ( v * v - radius * radius ));
         
         if ( desc < 0 )  
@@ -57,6 +56,7 @@ public:
         }
         if ( dista < 0 )
         {
+            
                 return false;
         }
         

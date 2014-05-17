@@ -12,7 +12,7 @@ public:
     
 
     operator std::string(){
-        return "Vector{"+std::to_string(x[0])+","+std::to_string(x[1])+","+std::to_string(x[2])+"}";
+        return std::to_string(x[0])+" "+std::to_string(x[1])+" "+std::to_string(x[2]);
     }
     
     inline const T length() const{
@@ -106,7 +106,15 @@ public:
     }
 
     inline Vector3Base<T> randomVectorInHemisphere() const {
-        Vector3Base<T> newVector = {generator()-0.5,generator()-0.5,generator()-0.5};
+        double a, b;
+        Vector3Base<T> newVector;
+        do{
+            a = generator();
+            b = generator();
+        }while(a*a+b*b >= 1);
+        
+        newVector = {2*a*sqrt(1-(a*a+b*b)),2*b*sqrt(1-(a*a+b*b)), 1 - 2*(a*a+b*b)};
+
         if(newVector* *this < 0)
           newVector *= -1;
         return newVector.norm();
